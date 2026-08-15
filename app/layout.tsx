@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Website Mill Demo Lab",
-  description: "An interactive demonstration website showing conversion-led design for a fictional local landscaping business.",
+  title: "The Website Mill | Live Website Showcase",
+  description: "Explore seven interactive, responsive business website concepts created by The Website Mill.",
   other: {
     "codex-preview": "development",
   },
