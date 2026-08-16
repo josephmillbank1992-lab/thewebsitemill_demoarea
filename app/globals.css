@@ -5004,3 +5004,133 @@ img {
     grid-column: auto;
   }
 }
+
+/* Final pre-live rhythm: compact desktop spacing and controlled display type */
+@media (min-width: 701px) {
+  .rv-sessions,
+  .rv-how,
+  .rv-trust,
+  .rv-faq,
+  .rv-book,
+  .l-services,
+  .l-work,
+  .l-quote,
+  .l-about,
+  .a-intro,
+  .a-collection,
+  .a-trust,
+  .c-included,
+  .c-book,
+  .n-feed,
+  .n-menu,
+  .n-care,
+  .m-hero,
+  .m-month,
+  .m-portal,
+  .m-fit,
+  .m-footer,
+  .pc-services,
+  .pc-standard,
+  .pc-quote {
+    padding-top: clamp(3.25rem, 5vw, 4.75rem);
+    padding-bottom: clamp(3.25rem, 5vw, 4.75rem);
+  }
+  .rv-hero,
+  .rv-hero img {
+    min-height: 560px;
+  }
+  .rv-hero h1 {
+    font-size: clamp(4rem, 6.5vw, 6.6rem);
+  }
+  .rv-sessions h2,
+  .rv-how h2,
+  .rv-faq h2,
+  .rv-trust h2,
+  .rv-book h2 {
+    font-size: clamp(2.5rem, 4.4vw, 4.5rem);
+  }
+  .l-hero {
+    min-height: 560px;
+  }
+  .l-hero h1 {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+  .l-services h2,
+  .l-work h2,
+  .l-quote h2,
+  .l-about h2 {
+    font-size: clamp(3rem, 4.6vw, 4.7rem);
+  }
+  .a-intro h1 {
+    font-size: clamp(4.2rem, 6.5vw, 6.5rem);
+  }
+  .a-feature {
+    margin-bottom: 4.5rem;
+  }
+  .a-feature img {
+    height: 560px;
+  }
+  .a-grid img {
+    height: 460px;
+  }
+  .c-hero {
+    min-height: 560px;
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+  .c-hero h1 {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+  .c-team {
+    margin-bottom: 3.5rem;
+  }
+  .s-hero {
+    height: 560px;
+    min-height: 560px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .s-hero h1 {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+  .s-store {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .n-hero {
+    min-height: 590px;
+    padding-top: 3.75rem;
+  }
+  .n-hero h1 {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+  .n-feed h2,
+  .n-menu h2,
+  .n-care h2 {
+    font-size: clamp(3rem, 4.8vw, 4.8rem);
+  }
+  .m-hero {
+    min-height: 560px;
+  }
+  .m-hero h1 {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+  .m-month h2,
+  .m-portal h2,
+  .m-fit h2,
+  .m-footer h2 {
+    font-size: clamp(3rem, 4.6vw, 4.6rem);
+  }
+  .pc-hero,
+  .pc-hero figure img {
+    min-height: 610px;
+  }
+  .pc-hero h1 {
+    font-size: clamp(4rem, 6.2vw, 6.5rem);
+  }
+  .pc-services h2,
+  .pc-standard h2,
+  .pc-quote h2 {
+    font-size: clamp(3rem, 4.7vw, 4.8rem);
+  }
+}
