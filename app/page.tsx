@@ -2364,9 +2364,9 @@ function Prestige() {
       </section>
 
       <section className="pc-proof">
-        <span>PHOTO-LED QUOTES</span>
-        <span>CLEAR INCLUSIONS</span>
-        <span>ONE POINT OF CONTACT</span>
+        <span>SHARE PROPERTY DETAILS</span>
+        <span>RECEIVE CLEAR INCLUSIONS</span>
+        <span>CONFIRM YOUR PLAN</span>
       </section>
 
       <section className="pc-services" id="pc-services">
@@ -2395,9 +2395,8 @@ function Prestige() {
           <small>THE PRESTIGE STANDARD</small>
           <h2>The details make the difference.</h2>
           <p>
-            A premium cleaning site should show the finish, explain exactly what
-            is included and make it easy to send the information needed for an
-            accurate quote.
+            Tell us what matters most, share the property details and receive a
+            clear plan shaped around the finish you want.
           </p>
         </div>
         <div className="pc-gallery">
