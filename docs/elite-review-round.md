@@ -211,3 +211,18 @@ The supplied Instagram profile could not be reliably retrieved through public we
 ## Validation record
 
 The release is accepted only after formatting, production build, rendered HTML test, lint, diff validation, deployment status and responsive browser checks. Any remaining limitation is recorded in the PR rather than hidden.
+
+### Final founder-panel portfolio scores
+
+| Business                 | Mobile | Desktop |
+| ------------------------ | -----: | ------: |
+| LuxeBeorn                |    9.3 |     9.2 |
+| Andrew Thorn Landscaping |    9.1 |     9.1 |
+| Morrow Studio            |    9.2 |     9.3 |
+| Neat & Kind              |    9.0 |     9.0 |
+| Field Supply             |    9.2 |     9.3 |
+| Afterglow Nail Studio    |    9.2 |     9.2 |
+| The Good Work Club       |    9.1 |     9.2 |
+| Prestige Cleans          |    9.4 |     9.2 |
+
+These are portfolio-demo scores after the founder acceptance pass. They do not replace the documented real-asset and owner-approval requirements for launch readiness.
