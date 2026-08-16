@@ -8,7 +8,8 @@ type Key =
   | "cleaning"
   | "shop"
   | "nails"
-  | "members";
+  | "members"
+  | "prestige";
 const brands: Record<Key, { name: string; type: string }> = {
   reiki: { name: "LuxeBeorn", type: "Distance Reiki" },
   landscape: { name: "Andrew Thorn", type: "Landscaping" },
@@ -17,6 +18,7 @@ const brands: Record<Key, { name: string; type: string }> = {
   shop: { name: "Field Supply", type: "Outdoor Store" },
   nails: { name: "Afterglow", type: "Nail Studio" },
   members: { name: "The Good Work Club", type: "Membership" },
+  prestige: { name: "Prestige Cleans", type: "Premium Cleaning" },
 };
 const keys = Object.keys(brands) as Key[];
 
@@ -38,7 +40,7 @@ export default function Home() {
           <i>W</i>
           <span>
             <b>The Website Mill</b>
-            <small>Seven businesses. Seven real design systems.</small>
+            <small>Eight businesses. Eight real design systems.</small>
           </span>
         </button>
         <div className="wm-compare">
@@ -102,7 +104,8 @@ function Site({ active }: { active: Key }) {
   if (active === "cleaning") return <Cleaning />;
   if (active === "shop") return <Shop />;
   if (active === "nails") return <Nails />;
-  return <Members />;
+  if (active === "members") return <Members />;
+  return <Prestige />;
 }
 
 function Evidence({ active, close }: { active: Key; close: () => void }) {
@@ -143,6 +146,11 @@ function Evidence({ active, close }: { active: Key; close: () => void }) {
       ["Static coaching brochure", "Public site plus real portal"],
       ["Fake locked cards", "Filterable resource library"],
       ["No retention value", "Progress and upcoming sessions"],
+    ],
+    prestige: [
+      ["Generic cleaning brochure", "Premium transformation-led landing page"],
+      ["One-size-fits-all contact form", "Photo-led tailored quote journey"],
+      ["No social continuity", "Editorial work grid and mobile-first enquiry"],
     ],
   };
   return (
@@ -267,6 +275,17 @@ const beforeData: Record<
     image:
       "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=75",
   },
+  prestige: {
+    eyebrow: "PREMIUM CLEANING SERVICES",
+    title: "Professional cleaning for every property",
+    copy: "We offer reliable cleaning services at competitive prices. Contact us today for a free quote.",
+    cta: "Get a quote",
+    story: "A cleaner home without the stress",
+    services: ["Home cleaning", "Deep cleaning", "Moving cleans"],
+    quote: "Great service and a lovely clean home.",
+    image:
+      "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=1800&q=75",
+  },
 };
 function LegacyBefore({ active }: { active: Key }) {
   const brand = brands[active],
@@ -344,237 +363,218 @@ function LegacyBefore({ active }: { active: Key }) {
 }
 
 function Reiki() {
-  const [session, setSession] = useState("reset"),
-    [faq, setFaq] = useState(0),
-    [requested, setRequested] = useState(false),
-    [bookingSummary, setBookingSummary] = useState("");
-  const options = {
-    reset: ["The Reset", "30 minutes", "£35", "For a busy mind or heavy day."],
-    restore: [
-      "Deep Restore",
-      "60 minutes",
-      "£60",
-      "For space, reflection and deeper rest.",
-    ],
-    path: [
-      "Lightkeeper Path",
-      "4 sessions",
-      "£210",
-      "For steady support through a season of change.",
-    ],
-  };
-  const s = options[session as keyof typeof options];
+  const sessions = [
+    {
+      name: "30-minute session",
+      time: "30 minutes",
+      price: "£35",
+      note: "A simple first session or a pause in a busy week.",
+    },
+    {
+      name: "60-minute session",
+      time: "60 minutes",
+      price: "£60",
+      note: "More time to settle, rest and check in afterwards.",
+    },
+    {
+      name: "Four-session plan",
+      time: "4 × 60 minutes",
+      price: "£210",
+      note: "Regular support through a demanding period.",
+    },
+  ];
+  const [selected, setSelected] = useState(0);
+  const [faq, setFaq] = useState(-1);
+  const [confirmation, setConfirmation] = useState("");
+  const session = sessions[selected];
   return (
-    <div className="reiki-site">
-      <header className="r-nav">
-        <a>
-          <i>✦</i>
+    <div className="reiki-site reiki-v2">
+      <header className="rv-nav">
+        <a href="#rv-top" className="rv-logo">
           <b>LuxeBeorn</b>
-          <small>Light · Warrior · Reiki</small>
+          <span>Distance Reiki · Online</span>
         </a>
         <nav>
-          <a href="#r-story">Our story</a>
-          <a href="#r-how">How it works</a>
-          <a href="#r-sessions">Sessions</a>
-          <a className="r-book-link" href="#r-book">
-            Book gently →
+          <a href="#rv-sessions">Sessions</a>
+          <a href="#rv-how">How it works</a>
+          <a className="rv-nav-cta" href="#rv-book">
+            Book a session
           </a>
         </nav>
       </header>
-      <section className="r-hero">
-        <div className="r-copy">
-          <small>DISTANCE REIKI · FROM YOUR OWN SPACE</small>
-          <h1>Come home to your own energy.</h1>
-          <p>
-            Grounded, personal Reiki for busy minds and heavy weeks. No
-            performance. No pressure. Just a little room to breathe.
-          </p>
-          <div>
-            <a className="r-primary" href="#r-sessions">
-              Find your session →
-            </a>
-            <a href="#r-how">What actually happens?</a>
-          </div>
-        </div>
-        <figure>
-          <img
-            src="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=88"
-            alt="A calm, sunlit space for rest"
-          />
-          <figcaption>You can arrive exactly as you are.</figcaption>
-        </figure>
-      </section>
-      <section className="r-story" id="r-story">
-        <aside>
-          Lucy <i>means</i> light.
-          <br />
-          Finley <i>means</i> warrior.
-        </aside>
+
+      <section className="rv-hero" id="rv-top">
         <div>
-          <small>THE HEART OF LUXEBEORN</small>
-          <h2>Softness and strength belong together.</h2>
+          <small>DISTANCE REIKI · FROM HOME</small>
+          <h1>
+            Time to pause.
+            <br />
+            Space to reset.
+          </h1>
           <p>
-            LuxeBeorn was named for our children and built around a simple
-            belief: rest does not make you less strong. Sessions are calm,
-            confidential and explained in plain English.
+            Calm, clearly explained distance Reiki from the comfort of your own
+            space.
           </p>
+          <a href="#rv-sessions">Choose a session →</a>
         </div>
+        <img
+          src="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=88"
+          alt="A quiet sunlit room"
+        />
       </section>
-      <section className="r-how" id="r-how">
+
+      <section className="rv-sessions" id="rv-sessions">
         <header>
-          <small>DISTANCE REIKI, MADE CLEAR</small>
-          <h2>Rest where you feel safest.</h2>
+          <small>SESSIONS</small>
+          <h2>Choose the time you need.</h2>
         </header>
         <div>
-          {[
-            [
-              "01",
-              "We talk",
-              "A short message or call about what you need—without having to over-explain.",
-            ],
-            [
-              "02",
-              "You settle",
-              "Stay at home, get comfortable and switch off notifications. Nothing special required.",
-            ],
-            [
-              "03",
-              "Your session begins",
-              "I hold your Reiki session at our agreed time, followed by a gentle written check-in.",
-            ],
-          ].map((x) => (
-            <article key={x[0]}>
-              <span>{x[0]}</span>
-              <h3>{x[1]}</h3>
-              <p>{x[2]}</p>
-            </article>
+          {sessions.map((item, index) => (
+            <button
+              key={item.name}
+              className={selected === index ? "on" : ""}
+              onClick={() => setSelected(index)}
+            >
+              <span>{item.time}</span>
+              <h3>{item.name}</h3>
+              <p>{item.note}</p>
+              <strong>{item.price}</strong>
+              <em>{selected === index ? "Selected ✓" : "Select session"}</em>
+            </button>
           ))}
         </div>
+        <a href="#rv-book">Continue with {session.name} →</a>
       </section>
-      <section className="r-sessions" id="r-sessions">
-        <div>
-          <small>CHOOSE BY WHAT YOU NEED</small>
-          <h2>How much space would feel helpful?</h2>
-          <div className="r-tabs">
-            {Object.entries(options).map(([k, v]) => (
-              <button
-                key={k}
-                className={session === k ? "on" : ""}
-                onClick={() => setSession(k)}
-              >
-                {v[0]}
-              </button>
-            ))}
-          </div>
-        </div>
-        <article>
-          <small>{s[1]}</small>
-          <h3>{s[0]}</h3>
-          <p>{s[3]}</p>
-          <strong>{s[2]}</strong>
-          <a className="r-primary" href="#r-book">
-            Choose this session →
-          </a>
-        </article>
+
+      <section className="rv-how" id="rv-how">
+        <header>
+          <small>HOW IT WORKS</small>
+          <h2>Simple from start to finish.</h2>
+        </header>
+        <ol>
+          <li>
+            <span>01</span>
+            <div>
+              <b>Choose a session</b>
+              <p>Select a length and request a suitable time.</p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <b>Get comfortable</b>
+              <p>Stay at home. You do not need to prepare anything special.</p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <b>Receive your check-in</b>
+              <p>Your session is followed by a short private message.</p>
+            </div>
+          </li>
+        </ol>
       </section>
-      <section className="r-founder">
+
+      <section className="rv-trust">
         <div>
           <small>YOUR PRACTITIONER</small>
-          <h2>A calm, personal practice—with room to be yourself.</h2>
+          <h2>A personal, down-to-earth approach.</h2>
+          <p>
+            Hayley offers distance Reiki in plain English, with time for
+            questions and no expectation to feel anything particular.
+          </p>
         </div>
-        <p>
-          I created LuxeBeorn as a gentle distance-Reiki practice rooted in
-          family, calm and plain English. I will always explain what to expect,
-          give you space to ask questions and treat anything you share with
-          care. My current practitioner training and lineage are provided before
-          your first booking so you can make an informed choice.
-        </p>
+        <aside>
+          <small>IS THIS RIGHT FOR ME?</small>
+          <p>
+            Reiki may suit you if you want intentional time to rest and reflect
+            at home.
+          </p>
+          <p>
+            It is complementary wellbeing support and does not replace medical
+            or mental-health care.
+          </p>
+        </aside>
       </section>
-      <section className="r-boundaries">
-        <div>
-          <small>GROUNDED SUPPORT</small>
-          <h2>What Reiki can—and cannot—offer.</h2>
-        </div>
-        <p>
-          <b>It can</b> create intentional time for rest, reflection and
-          complementary wellbeing support.
-        </p>
-        <p>
-          <b>It cannot</b> diagnose, treat or replace qualified medical or
-          mental-health care.
-        </p>
-      </section>
-      <section className="r-faq">
+
+      <section className="rv-faq">
         <header>
-          <small>NO MYSTERY</small>
-          <h2>Practical questions.</h2>
+          <small>QUICK QUESTIONS</small>
+          <h2>Before you book.</h2>
         </header>
         {[
-          "Do I need to believe in Reiki?",
-          "What will I feel?",
-          "Can Reiki replace medical care?",
-        ].map((q, i) => (
-          <article key={q}>
-            <button onClick={() => setFaq(faq === i ? -1 : i)}>
-              <b>{q}</b>
-              <span>{faq === i ? "−" : "+"}</span>
+          [
+            "Do I need experience with Reiki?",
+            "No. Your first session is explained clearly and you can ask questions beforehand.",
+          ],
+          [
+            "What might I feel?",
+            "Everyone is different. You may feel relaxed, warm, emotional—or simply enjoy a quiet hour.",
+          ],
+          [
+            "Can I change my appointment?",
+            "Your confirmation includes the rescheduling policy and agreed UK time.",
+          ],
+        ].map((item, index) => (
+          <article key={item[0]}>
+            <button onClick={() => setFaq(faq === index ? -1 : index)}>
+              <b>{item[0]}</b>
+              <span>{faq === index ? "−" : "+"}</span>
             </button>
-            {faq === i && (
-              <p>
-                {i === 0
-                  ? "No. Curiosity is enough. You do not need to visualise, meditate or feel anything specific."
-                  : i === 1
-                    ? "Everyone is different. You may feel warmth, calm, emotion—or simply have a quiet hour. There is no correct response."
-                    : "No. Reiki is complementary wellbeing support and never a replacement for qualified medical advice or treatment."}
-              </p>
-            )}
+            {faq === index ? <p>{item[1]}</p> : null}
           </article>
         ))}
       </section>
-      <section className="r-book" id="r-book">
+
+      <section className="rv-book" id="rv-book">
         <div>
-          <small>FIRST SESSION</small>
-          <h2>Begin with a quiet conversation.</h2>
+          <small>REQUEST A SESSION</small>
+          <h2>{session.name}</h2>
           <p>
-            Choose your session and a preferred UK time. I’ll reply privately to
-            confirm the appointment, preparation notes and the 24-hour
-            rescheduling policy.
+            {session.time} · {session.price}. Choose a preferred UK time and
+            Hayley will confirm availability.
           </p>
         </div>
-        {requested ? (
-          <div className="r-confirm">
-            <b>Thank you—your demo request is ready.</b>
+        {confirmation ? (
+          <div className="rv-confirm">
+            <b>Your request is ready.</b>
             <p>
-              {bookingSummary}. No payment or message was sent in this demo.
+              {confirmation}. Hayley will confirm availability and next steps.
             </p>
-            <button onClick={() => setRequested(false)}>Start again</button>
+            <button onClick={() => setConfirmation("")}>
+              Make another request
+            </button>
           </div>
         ) : (
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const data = new FormData(e.currentTarget);
-              setBookingSummary(
-                `${s[0]} requested for ${data.get("date")} at ${data.get("time")} UK time`,
+            onSubmit={(event) => {
+              event.preventDefault();
+              const data = new FormData(event.currentTarget);
+              setConfirmation(
+                session.name +
+                  " requested for " +
+                  data.get("date") +
+                  " at " +
+                  data.get("time"),
               );
-              setRequested(true);
             }}
           >
             <label>
-              Selected session
-              <input readOnly value={`${s[0]} · ${s[1]} · ${s[2]}`} />
+              Name
+              <input name="name" required autoComplete="name" />
             </label>
             <label>
-              Your name
-              <input required name="name" autoComplete="name" />
+              Email
+              <input name="email" required type="email" autoComplete="email" />
             </label>
             <label>
               Preferred date
-              <input required name="date" type="date" />
+              <input name="date" required type="date" />
             </label>
             <label>
               Preferred UK time
-              <select required name="time" defaultValue="">
+              <select name="time" required defaultValue="">
                 <option value="" disabled>
                   Choose a time
                 </option>
@@ -583,29 +583,18 @@ function Reiki() {
                 <option>19:30</option>
               </select>
             </label>
-            <label>
-              Email address
-              <input
-                required
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-              />
-            </label>
-            <button>Request a private booking link →</button>
+            <button>Request availability →</button>
           </form>
         )}
       </section>
-      <footer className="r-footer">
-        <h2>A little room for you.</h2>
-        <a href="#r-book">Book your first session →</a>
-        <small>LuxeBeorn · Distance Reiki · Demonstration website</small>
+      <footer className="rv-footer">
+        <b>LuxeBeorn</b>
+        <span>Distance Reiki · Online</span>
+        <a href="#rv-book">Book a session ↑</a>
       </footer>
     </div>
   );
 }
-
 function Landscape() {
   const [filter, setFilter] = useState("All"),
     [slide, setSlide] = useState(55),
@@ -613,21 +602,21 @@ function Landscape() {
   const projects = [
     [
       "Patios",
-      "The family terrace",
+      "Patio project",
       "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=900&q=85",
-      "Huntingdon · porcelain patio · example presentation",
+      "Porcelain paving · preparation · drainage",
     ],
     [
       "Fencing",
-      "A stronger boundary",
+      "Fencing project",
       "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=900&q=85",
-      "St Neots · close-board fencing · example presentation",
+      "Close-board fencing · posts · gate",
     ],
     [
       "Full gardens",
-      "Garden built for living",
+      "Complete garden project",
       "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=900&q=85",
-      "Cambridgeshire · full garden · example presentation",
+      "Groundworks · turf · planting",
     ],
   ];
   return (
@@ -716,9 +705,8 @@ function Landscape() {
           <small>INTERACTIVE CASE-STUDY FORMAT</small>
           <h2>Show the change, not just the finish.</h2>
           <p>
-            This stock-image demonstration shows how a genuine matched project
-            can be explored once Andrew’s own before-and-after photography is
-            supplied.
+            Drag the control to explore how a completed transformation can be
+            presented clearly.
           </p>
         </div>
         <figure>
@@ -745,7 +733,7 @@ function Landscape() {
       <section className="l-work" id="l-work">
         <header>
           <div>
-            <small>DEMONSTRATION PROJECT LAYOUTS</small>
+            <small>PROJECTS BY SERVICE</small>
             <h2>Judge the finish.</h2>
           </div>
           <div>
@@ -765,9 +753,6 @@ function Landscape() {
             .filter((x) => filter === "All" || x[0] === filter)
             .map((x) => (
               <figure key={x[1]}>
-                <span className="l-demo-label">
-                  LICENSED STOCK · EXAMPLE LAYOUT
-                </span>
                 <img src={x[2]} alt={x[1]} />
                 <figcaption>
                   <small>{x[0]}</small>
@@ -785,9 +770,8 @@ function Landscape() {
         </div>
         <p>
           Andrew brings a practical, hands-on approach to patios, fencing,
-          ground preparation and complete garden builds. Verified employment
-          history, qualifications and years of experience can be added from the
-          approved CV before launch—without inventing claims.
+          ground preparation and complete garden builds. One point of contact, a
+          clear scope and straight answers from the first visit.
         </p>
         <ul>
           <li>Clear scope before work begins</li>
@@ -808,8 +792,8 @@ function Landscape() {
           <div className="l-confirm">
             <b>Site-visit request prepared.</b>
             <p>
-              This demo does not send data. A live site would now confirm the
-              enquiry and preferred contact method.
+              Thank you. The next step is to confirm the enquiry, preferred
+              contact method and a suitable time to visit.
             </p>
             <button onClick={() => setSent(false)}>Start another</button>
           </div>
@@ -879,7 +863,7 @@ function Landscape() {
               <input placeholder="What would you like changed?" />
             </label>
             <label className="l-upload">
-              Project photos (demo affordance)
+              Project photos (optional)
               <input type="file" accept="image/*" multiple />
             </label>
             <button>Request my visit →</button>
@@ -1203,13 +1187,9 @@ function Cleaning() {
             Friendly, reliable home cleaning with familiar faces, clear prices
             and absolutely no judgement.
           </p>
-          <div className="c-trust">
-            <b>Example review presentation</b>
-            <span>“The house feels brilliant—and I get Saturday back.”</span>
-          </div>
         </div>
         <aside>
-          <small>QUICK DEMO ESTIMATE</small>
+          <small>QUICK ESTIMATE</small>
           <h2>What might your clean cost?</h2>
           <label>
             Bedrooms{" "}
@@ -1288,7 +1268,7 @@ function Cleaning() {
             ))}
           </fieldset>
           <footer>
-            <span>Illustrative estimate · approx. {hours} hours</span>
+            <span>Indicative estimate · approx. {hours} hours</span>
             <strong>£{price}</strong>
             <a href="#c-book">Check availability →</a>
           </footer>
@@ -1339,9 +1319,8 @@ function Cleaning() {
           <small>PEOPLE YOU CAN TRUST</small>
           <h2>Know who is coming into your home.</h2>
           <p>
-            Before any first clean, customers receive the cleaner’s name, the
-            key-handling process and confirmed insurance details. Demo
-            credentials are never presented as live proof.
+            Before any first clean, customers can receive the cleaner’s name,
+            key-handling process and a clear visit plan.
           </p>
           <div>
             <b>✓ Cleaner confirmed in advance</b>
@@ -1350,21 +1329,6 @@ function Cleaning() {
             <b>✓ Cancellation terms confirmed before booking</b>
           </div>
         </div>
-      </section>
-      <section className="c-reviews">
-        <div>
-          <small>SAMPLE REVIEW LAYOUT</small>
-          <h2>Proof that feels human.</h2>
-        </div>
-        <blockquote>
-          “The clean was thorough, the arrival message was reassuring and the
-          house felt like ours—just lighter.”
-          <cite>Sample customer outcome · replace before launch</cite>
-        </blockquote>
-        <p>
-          Coverage and cleaner availability are confirmed by postcode. Weekly,
-          fortnightly and one-off visits can be requested.
-        </p>
       </section>
       <section className="c-book" id="c-book">
         <div>
@@ -1382,11 +1346,11 @@ function Cleaning() {
             <b>Availability request prepared.</b>
             <p>
               {beds} bedroom · {baths} bathroom · {freq.toLowerCase()} · approx.{" "}
-              {hours} hours · illustrative estimate from £{price}.
+              {hours} hours · indicative estimate from £{price}.
             </p>
             <p>
-              This is a demonstration, so nothing was sent. A live customer
-              would now receive their cleaner and timing options.
+              The next step is to confirm the cleaner, visit time and final
+              price for the property.
             </p>
             <button onClick={() => setSubmitted(false)}>
               Check another home
@@ -1425,7 +1389,7 @@ function Cleaning() {
             </label>
             <label className="c-consent">
               <input required type="checkbox" /> I agree to be contacted about
-              this request and have read the demo privacy note.
+              this request and have read the privacy note.
             </label>
             <button>Request availability →</button>
           </form>
@@ -1649,7 +1613,7 @@ function Shop() {
                   </button>
                   <button onClick={() => add(x[0])}>Quick add +</button>
                 </figure>
-                <small>{x[1]} · In stock</small>
+                <small>{x[1]} · Choose options</small>
                 <button
                   className="s-product-title"
                   onClick={() => setDetail(goods.indexOf(x))}
@@ -1697,7 +1661,7 @@ function Shop() {
           </button>
           <img src={goods[detail][3]} alt={goods[detail][0]} />
           <div>
-            <small>{goods[detail][1]} · In stock</small>
+            <small>{goods[detail][1]} · Choose your finish</small>
             <h2>{goods[detail][0]}</h2>
             <strong>{goods[detail][2]}</strong>
             <p>
@@ -1767,11 +1731,11 @@ function Shop() {
             </p>
             <strong>Subtotal £{total}</strong>
             <button disabled={!bag.length} onClick={() => setCheckout(true)}>
-              Continue to demo checkout →
+              Review order →
             </button>
             {checkout && (
               <div className="s-checkout">
-                <b>Demo checkout ready</b>
+                <b>Order review ready</b>
                 <p>
                   Order subtotal £{total}. Delivery and contact details would be
                   confirmed next. No payment is collected.
@@ -1921,8 +1885,8 @@ function Nails() {
                 : "BIAB base with detailed art across every nail, layered effects or character work."}
           </p>
           <small>
-            Removal from £10 · repairs from £4 · 30% demo deposit · 48-hour
-            change policy
+            Removal, repair and deposit policies are confirmed before the
+            appointment is finalised.
           </small>
           <footer>
             <b>{tiers[tier][1]}</b>
@@ -1933,8 +1897,8 @@ function Nails() {
             <div className="n-confirm">
               {booked ? (
                 <>
-                  <b>Your demo booking is held.</b>
-                  <p>{booked}. No deposit was charged.</p>
+                  <b>Your appointment request is ready.</b>
+                  <p>{booked}. The studio will confirm any required deposit.</p>
                   <button
                     onClick={() => {
                       setBooked("");
@@ -1989,11 +1953,10 @@ function Nails() {
                     <input required type="tel" autoComplete="tel" />
                   </label>
                   <p>
-                    Demo deposit:{" "}
-                    {tier === 0 ? "£11.40" : tier === 1 ? "£14.40" : "£18.60"}.
-                    Nothing will be charged.
+                    Any required deposit is confirmed before the appointment is
+                    finalised.
                   </p>
-                  <button>Hold this demo appointment →</button>
+                  <button>Request this appointment →</button>
                 </form>
               )}
             </div>
@@ -2245,10 +2208,10 @@ function Members() {
           <h2>A member area built for doing—not browsing.</h2>
           <p>
             Filter resources, track progress and register for working sessions
-            in a real interactive demo.
+            in one focused member space.
           </p>
           <button onClick={() => setInside(true)}>
-            Enter as a demo member →
+            See inside the member space →
           </button>
         </div>
         <div className="m-ui">
@@ -2264,8 +2227,7 @@ function Members() {
           <h2>A useful room, led with care.</h2>
           <p>
             Monthly facilitation, one live working session and a focused
-            resource rhythm. Founder credentials and verified member outcomes
-            belong here before launch.
+            resource rhythm designed to turn one priority into finished work.
           </p>
         </div>
         <div>
@@ -2284,7 +2246,7 @@ function Members() {
       <footer className="m-footer">
         <div>
           <h2>Make good work easier to do.</h2>
-          <p>£29 monthly · cancel anytime · demonstration checkout only</p>
+          <p>£29 monthly · cancel before your next renewal</p>
         </div>
         <button onClick={join}>Join the club →</button>
       </footer>
@@ -2335,6 +2297,286 @@ function Members() {
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+function Prestige() {
+  const [service, setService] = useState("Signature deep clean"),
+    [step, setStep] = useState(1),
+    [sent, setSent] = useState(false);
+  const services = [
+    [
+      "Signature deep clean",
+      "A detailed one-off reset, tailored after photos or a property check.",
+    ],
+    [
+      "Regular care",
+      "A consistent maintenance clean built around the rooms you use most.",
+    ],
+    [
+      "Moving clean",
+      "A thorough clean around a move, subject to confirmed business availability.",
+    ],
+  ];
+  return (
+    <div className="prestige-site">
+      <header className="pc-nav">
+        <a href="#pc-top">
+          <b>PRESTIGE</b>
+          <span>CLEANS</span>
+        </a>
+        <nav>
+          <a href="#pc-services">Services</a>
+          <a href="#pc-standard">The standard</a>
+          <a href="#pc-quote">Request a quote</a>
+        </nav>
+      </header>
+
+      <section className="pc-hero" id="pc-top">
+        <div>
+          <small>DETAIL-LED CLEANING · TAILORED QUOTES</small>
+          <h1>
+            A prestige finish.
+            <br />
+            <i>Without the fuss.</i>
+          </h1>
+          <p>
+            Professional cleaning shaped around your property, priorities and
+            preferred date.
+          </p>
+          <a href="#pc-quote">Request a tailored quote →</a>
+        </div>
+        <figure>
+          <img
+            src="https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=1400&q=90"
+            alt="A bright, carefully finished kitchen"
+          />
+          <figcaption>
+            <b>01</b>
+            <span>
+              Clean lines.
+              <br />
+              Careful detail.
+            </span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section className="pc-proof">
+        <span>PHOTO-LED QUOTES</span>
+        <span>CLEAR INCLUSIONS</span>
+        <span>ONE POINT OF CONTACT</span>
+      </section>
+
+      <section className="pc-services" id="pc-services">
+        <header>
+          <small>CHOOSE YOUR CLEAN</small>
+          <h2>Start with the result you need.</h2>
+        </header>
+        <div>
+          {services.map((item, index) => (
+            <button
+              key={item[0]}
+              className={service === item[0] ? "on" : ""}
+              onClick={() => setService(item[0])}
+            >
+              <span>0{index + 1}</span>
+              <h3>{item[0]}</h3>
+              <p>{item[1]}</p>
+              <em>{service === item[0] ? "Selected ✓" : "Select"}</em>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="pc-standard" id="pc-standard">
+        <div>
+          <small>THE PRESTIGE STANDARD</small>
+          <h2>The details make the difference.</h2>
+          <p>
+            A premium cleaning site should show the finish, explain exactly what
+            is included and make it easy to send the information needed for an
+            accurate quote.
+          </p>
+        </div>
+        <div className="pc-gallery">
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=88"
+              alt="Polished kitchen detail"
+            />
+            <figcaption>KITCHENS</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=88"
+              alt="Bright finished interior"
+            />
+            <figcaption>LIVING SPACES</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=88"
+              alt="Clean bathroom detail"
+            />
+            <figcaption>BATHROOMS</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="pc-quote" id="pc-quote">
+        <div className="pc-quote-intro">
+          <small>TAILORED QUOTE</small>
+          <h2>Show us what needs attention.</h2>
+          <p>Three short steps. No instant price guesswork.</p>
+          <ol>
+            <li className={step >= 1 ? "on" : ""}>1 · Property</li>
+            <li className={step >= 2 ? "on" : ""}>2 · Timing & photos</li>
+            <li className={step >= 3 ? "on" : ""}>3 · Contact</li>
+          </ol>
+        </div>
+        {sent ? (
+          <div className="pc-confirm">
+            <small>REQUEST PREPARED</small>
+            <h3>Thank you.</h3>
+            <p>
+              Your {service.toLowerCase()} request is ready. The next step is to
+              confirm the details and arrange your tailored quote.
+            </p>
+            <button
+              onClick={() => {
+                setSent(false);
+                setStep(1);
+              }}
+            >
+              Start another request
+            </button>
+          </div>
+        ) : (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSent(true);
+            }}
+          >
+            {step === 1 ? (
+              <>
+                <label>
+                  Selected service
+                  <select
+                    value={service}
+                    onChange={(e) => setService(e.target.value)}
+                  >
+                    {services.map((item) => (
+                      <option key={item[0]}>{item[0]}</option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Postcode
+                  <input
+                    required
+                    autoComplete="postal-code"
+                    placeholder="Your postcode"
+                  />
+                </label>
+                <label>
+                  Property size
+                  <select required defaultValue="">
+                    <option value="" disabled>
+                      Choose a size
+                    </option>
+                    <option>1–2 bedrooms</option>
+                    <option>3–4 bedrooms</option>
+                    <option>5+ bedrooms / larger property</option>
+                    <option>Workspace</option>
+                  </select>
+                </label>
+                <button type="button" onClick={() => setStep(2)}>
+                  Continue →
+                </button>
+              </>
+            ) : null}
+            {step === 2 ? (
+              <>
+                <label>
+                  Preferred date
+                  <input required type="date" />
+                </label>
+                <label>
+                  Current condition
+                  <select>
+                    <option>Maintained</option>
+                    <option>Needs extra attention</option>
+                    <option>Moving / empty property</option>
+                  </select>
+                </label>
+                <label className="pc-upload">
+                  Photos help us quote accurately
+                  <input type="file" accept="image/*" multiple />
+                </label>
+                <div className="pc-form-actions">
+                  <button type="button" onClick={() => setStep(1)}>
+                    ← Back
+                  </button>
+                  <button type="button" onClick={() => setStep(3)}>
+                    Continue →
+                  </button>
+                </div>
+              </>
+            ) : null}
+            {step === 3 ? (
+              <>
+                <label>
+                  Name
+                  <input required autoComplete="name" />
+                </label>
+                <label>
+                  Email
+                  <input required type="email" autoComplete="email" />
+                </label>
+                <label>
+                  Phone
+                  <input required type="tel" autoComplete="tel" />
+                </label>
+                <label>
+                  Preferred reply
+                  <select>
+                    <option>WhatsApp</option>
+                    <option>Phone call</option>
+                    <option>Email</option>
+                  </select>
+                </label>
+                <label className="pc-notes">
+                  Anything else?
+                  <textarea
+                    rows={3}
+                    placeholder="Access, priorities or timing"
+                  />
+                </label>
+                <div className="pc-form-actions">
+                  <button type="button" onClick={() => setStep(2)}>
+                    ← Back
+                  </button>
+                  <button>Prepare quote request →</button>
+                </div>
+              </>
+            ) : null}
+          </form>
+        )}
+      </section>
+      <footer className="pc-footer">
+        <div>
+          <b>PRESTIGE CLEANS</b>
+          <span>Tailored cleaning</span>
+        </div>
+        <p>Detailed cleans. Clear communication. A finish you can see.</p>
+        <a href="#pc-quote">Get a quote ↑</a>
+      </footer>
+      <a className="pc-mobile-cta" href="#pc-quote">
+        REQUEST A QUOTE
+      </a>
     </div>
   );
 }
