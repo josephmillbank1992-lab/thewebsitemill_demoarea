@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "The Website Mill | Live Website Showcase",
-  description: "Explore seven interactive, responsive business website concepts created by The Website Mill.",
+  description: "Explore eight distinct, interactive and responsive business website concepts created by The Website Mill.",
   other: {
     "codex-preview": "development",
   },
