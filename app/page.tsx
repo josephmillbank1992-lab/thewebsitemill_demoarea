@@ -417,10 +417,12 @@ function Reiki() {
           </p>
           <a href="#rv-sessions">Choose a session →</a>
         </div>
-        <img
-          src="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=88"
-          alt="A quiet sunlit room"
-        />
+        <figure className="rv-film">
+          <video autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=88">
+            <source src="https://cdn.coverr.co/videos/coverr-premium-close-up-shot-of-a-man-focusing-during-meditation/1080p.mp4" type="video/mp4" />
+          </video>
+          <span>PRESS PLAY ON YOUR PAUSE</span>
+        </figure>
       </section>
 
       <section className="rv-sessions" id="rv-sessions">
@@ -650,10 +652,12 @@ function Landscape() {
             <li>Tidy, respectful work</li>
           </ul>
         </div>
-        <img
-          src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=1200&q=88"
-          alt="Landscaper building a timber garden structure"
-        />
+        <figure className="l-hero-film">
+          <video autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=1200&q=88">
+            <source src="https://cdn.coverr.co/videos/coverr-watering-flowers-with-a-hosepipe-3213/1080p.mp4" type="video/mp4" />
+          </video>
+          <figcaption><span>WORK THAT</span><b>GROWS WITH THE GARDEN</b></figcaption>
+        </figure>
       </section>
       <section className="l-services" id="l-services">
         <header>
@@ -918,7 +922,12 @@ function Gallery() {
         </aside>
       </section>
       <section className="a-feature">
-        <img src={art[0].image} alt="Featured abstract artwork" />
+        <div className="a-feature-media">
+          <video autoPlay muted loop playsInline poster={art[0].image}>
+            <source src="https://cdn.coverr.co/videos/coverr-artist-rinsing-a-paintbrush-7377/1080p.mp4" type="video/mp4" />
+          </video>
+          <span>PROCESS / PIGMENT / PATIENCE</span>
+        </div>
         <div>
           <small>NEW ORIGINAL · 01</small>
           <h2>Salt Air I</h2>
@@ -1263,10 +1272,12 @@ function Cleaning() {
         </article>
       </section>
       <section className="c-team">
-        <img
-          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85"
-          alt="Friendly professional cleaner at work"
-        />
+        <div className="c-team-film">
+          <video autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85">
+            <source src="https://cdn.coverr.co/videos/coverr-premium-a-woman-purifies-a-rug-on-the-balcony-1207/1080p.mp4" type="video/mp4" />
+          </video>
+          <span>REAL WORK · CLEAR STANDARDS</span>
+        </div>
         <div>
           <small>PEOPLE YOU CAN TRUST</small>
           <h2>Know who is coming into your home.</h2>
@@ -1461,6 +1472,9 @@ function Shop() {
         </div>
       </header>
       <section className="s-hero">
+        <video className="s-hero-film" autoPlay muted loop playsInline>
+          <source src="https://cdn.coverr.co/videos/coverr-hiking-in-the-hills-1431/1080p.mp4" type="video/mp4" />
+        </video>
         <div>
           <small>FIELD NOTE / 026</small>
           <h1>
@@ -1757,13 +1771,11 @@ function Nails() {
           <a href="#n-book">Book your set ↗</a>
         </div>
         <div className="n-collage">
-          {nailImgs.slice(0, 3).map((x, i) => (
-            <img
-              key={x.src}
-              className={"n" + i}
-              src={x.src}
-              alt="Afterglow nail art"
-            />
+          <video className="n0" autoPlay muted loop playsInline poster={nailImgs[0].src}>
+            <source src="https://cdn.coverr.co/videos/coverr-girl-painting-her-nails-8350/1080p.mp4" type="video/mp4" />
+          </video>
+          {nailImgs.slice(1, 3).map((x, i) => (
+            <img key={x.src} className={"n" + (i + 1)} src={x.src} alt="Afterglow nail art" />
           ))}
         </div>
         <b className="n-sticker">
@@ -1952,6 +1964,7 @@ function Members() {
     return (
       <div className="portal">
         <aside>
+          <div className="m-orbit" aria-hidden="true"><i /><span>DO</span></div>
           <b>
             GOOD/W<span>MEMBER SPACE</span>
           </b>
@@ -2312,6 +2325,7 @@ function Prestige() {
               Careful detail.
             </span>
           </figcaption>
+          <span className="pc-shine" aria-hidden="true" />
         </figure>
       </section>
 
