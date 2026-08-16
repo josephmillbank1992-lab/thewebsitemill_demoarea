@@ -245,3 +245,20 @@ This pass applied the owner’s final rules consistently: tighter vertical rhyth
 - Source diff validation: passed.
 - ESLint: zero errors; external-image optimisation warnings remain intentional for this portfolio demo.
 - Publication still requires genuine owner-approved photography, reviews, operating details and policies where identified above.
+
+## Signature personality pass
+
+Only the rebuilt states were changed. The reconstructed Before states remain deliberately basic so the evidence comparison is not weakened.
+
+| Rebuilt site | Standout treatment |
+| --- | --- |
+| LuxeBeorn | Calm looping meditation film with a slow breathing-ring motif |
+| Andrew Thorn Landscaping | Full-height garden film, animated headline entrance and project-style film caption |
+| Morrow Studio | Moving artist-process feature and artwork lift interaction |
+| Neat & Kind | Full-height working-cleaner film and animated room-detail marker |
+| Field Supply | Cinematic trail film, restored product imagery and tactile catalogue zoom |
+| Afterglow Nail Studio | Nail-process film inside the hero collage and rotating studio stamp |
+| The Good Work Club | Orbiting action marker inside the monthly focus card |
+| Prestige Cleans | Slow image push and travelling polish-light treatment |
+
+The stock film concepts use commercially available clips from Coverr and must be replaced or formally approved for any real client launch. Every video has a still-image fallback, is muted, loops inline and respects the visitor’s reduced-motion preference.
