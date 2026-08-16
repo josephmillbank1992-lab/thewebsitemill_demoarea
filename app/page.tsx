@@ -597,7 +597,6 @@ function Reiki() {
 }
 function Landscape() {
   const [filter, setFilter] = useState("All"),
-    [slide, setSlide] = useState(55),
     [sent, setSent] = useState(false);
   const projects = [
     [
@@ -639,11 +638,7 @@ function Landscape() {
       <section className="l-hero">
         <div>
           <small>EXPERIENCED, OWNER-LED LANDSCAPING</small>
-          <h1>
-            Built properly.
-            <br />
-            Finished with care.
-          </h1>
+          <h1>Landscaping built properly.</h1>
           <p>
             Patios, fencing and complete gardens from one experienced local
             landscaper.
@@ -663,11 +658,7 @@ function Landscape() {
       <section className="l-services" id="l-services">
         <header>
           <span>01 / WHAT I DO</span>
-          <h2>
-            Solid work.
-            <br />
-            Straight answers.
-          </h2>
+          <h2>Patios, fencing and complete gardens.</h2>
         </header>
         {[
           [
@@ -700,41 +691,11 @@ function Landscape() {
           </article>
         ))}
       </section>
-      <section className="l-ba">
-        <div>
-          <small>INTERACTIVE CASE-STUDY FORMAT</small>
-          <h2>Show the change, not just the finish.</h2>
-          <p>
-            Drag the control to explore how a completed transformation can be
-            presented clearly.
-          </p>
-        </div>
-        <figure>
-          <img
-            src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=85"
-            alt="Example finished landscaped garden"
-          />
-          <div style={{ width: `${slide}%` }}>
-            <img
-              src="https://images.unsplash.com/photo-1599685315640-9ceab2f581ca?auto=format&fit=crop&w=1200&q=80"
-              alt="Example garden before landscaping"
-            />
-          </div>
-          <input
-            aria-label="Explore the before and after demonstration"
-            type="range"
-            min="5"
-            max="95"
-            value={slide}
-            onChange={(e) => setSlide(Number(e.target.value))}
-          />
-        </figure>
-      </section>
       <section className="l-work" id="l-work">
         <header>
           <div>
             <small>PROJECTS BY SERVICE</small>
-            <h2>Judge the finish.</h2>
+            <h2>Project gallery.</h2>
           </div>
           <div>
             {["All", "Patios", "Fencing", "Full gardens"].map((x) => (
@@ -950,11 +911,7 @@ function Gallery() {
       </header>
       <section className="a-intro">
         <p>BRITISH ARTIST · ORIGINALS & SMALL EDITIONS</p>
-        <h1>
-          Work for rooms
-          <br />
-          with a point of view.
-        </h1>
+        <h1>Original art for considered spaces.</h1>
         <aside>
           Original paintings, archival editions and quiet photographic studies
           made in a small British studio.
@@ -1011,11 +968,6 @@ function Gallery() {
             </button>
           ))}
         </div>
-      </section>
-      <section className="a-statement">
-        <span>“</span>
-        <h2>I paint the memory of a place, not the map of it.</h2>
-        <p>Studio notes · August 2026</p>
       </section>
       <section className="a-trust" id="a-artist">
         <div>
@@ -2224,10 +2176,10 @@ function Members() {
       <section className="m-fit">
         <div>
           <small>BUILT FOR REAL WORK</small>
-          <h2>A useful room, led with care.</h2>
+          <h2>Who the club is for.</h2>
           <p>
-            Monthly facilitation, one live working session and a focused
-            resource rhythm designed to turn one priority into finished work.
+            One monthly focus, one live working session and practical resources
+            for independent business owners.
           </p>
         </div>
         <div>
