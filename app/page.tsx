@@ -419,7 +419,7 @@ function Reiki() {
         </div>
         <figure className="rv-film">
           <video autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=88">
-            <source src="https://cdn.coverr.co/videos/coverr-premium-close-up-shot-of-a-man-focusing-during-meditation/1080p.mp4" type="video/mp4" />
+            <source src="https://cdn.coverr.co/videos/coverr-woman-sitting-by-a-window-looking-down-9029/1080p.mp4" type="video/mp4" />
           </video>
           <span>PRESS PLAY ON YOUR PAUSE</span>
         </figure>
@@ -1274,7 +1274,7 @@ function Cleaning() {
       <section className="c-team">
         <div className="c-team-film">
           <video autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85">
-            <source src="https://cdn.coverr.co/videos/coverr-premium-a-woman-purifies-a-rug-on-the-balcony-1207/1080p.mp4" type="video/mp4" />
+            <source src="https://cdn.coverr.co/videos/coverr-pressing-the-clean-button-on-a-robot-vacuum-cleaner-7639/1080p.mp4" type="video/mp4" />
           </video>
           <span>REAL WORK · CLEAR STANDARDS</span>
         </div>
