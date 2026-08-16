@@ -226,3 +226,22 @@ The release is accepted only after formatting, production build, rendered HTML t
 | Prestige Cleans          |    9.4 |     9.2 |
 
 These are portfolio-demo scores after the founder acceptance pass. They do not replace the documented real-asset and owner-approval requirements for launch readiness.
+
+## Final hypercritical pre-live pass
+
+This pass applied the owner’s final rules consistently: tighter vertical rhythm, logical heading order, controlled display sizes and concise customer-facing copy.
+
+- Capped oversized desktop headings and reduced inherited 70–100px section gaps across all eight designs.
+- Kept mobile copy on a consistent reading rail with smaller headings and compact section spacing.
+- Confirmed no visible paragraph exceeds 32 words.
+- Replaced vague or agency-style headings with direct business language on Andrew Thorn, Morrow Studio and The Good Work Club.
+- Removed Andrew Thorn’s unrelated stock-image comparison and Morrow Studio’s invented artist quotation because neither provided trustworthy proof.
+- Retained each business’s distinct layout, typography, colour, interaction and conversion journey.
+
+### Final release checks
+
+- Production build: passed.
+- Rendered HTML test: passed.
+- Source diff validation: passed.
+- ESLint: zero errors; external-image optimisation warnings remain intentional for this portfolio demo.
+- Publication still requires genuine owner-approved photography, reviews, operating details and policies where identified above.
