@@ -2740,6 +2740,114 @@ img {
     transition: none !important;
   }
 }
+
+/* Mobile layout correction — acceptance pass from physical-device captures */
+@media (max-width: 700px) {
+  .rv-hero > div {
+    order: 1;
+    padding: 30px 20px 34px;
+  }
+  .rv-film {
+    order: 2;
+    height: 240px;
+  }
+  .rv-hero h1 {
+    max-width: 9ch;
+    font-size: clamp(2.7rem, 11.5vw, 3.15rem);
+    line-height: .98;
+  }
+  .rv-hero p { max-width: 31ch; }
+  .rv-film span { font-size: .52rem; }
+
+  .l-hero { min-height: 0; }
+  .l-hero > div {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 28px 20px 30px;
+  }
+  .l-hero h1 {
+    max-width: 9ch;
+    margin: .65rem 0 1rem;
+    font-size: clamp(3rem, 13vw, 3.45rem);
+    line-height: .9;
+  }
+  .l-hero p { margin: 0 0 1rem; line-height: 1.48; }
+  .l-hero > div > a {
+    width: fit-content;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    padding: .8rem 1rem;
+  }
+  .l-hero ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .6rem .8rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+  }
+  .l-hero li {
+    padding: 0;
+    font-size: .64rem;
+    line-height: 1.4;
+  }
+  .l-hero li:first-child { grid-column: 1 / -1; }
+  .l-hero-film { height: 250px; }
+  .l-services,
+  .l-work,
+  .l-quote,
+  .l-about { padding: 34px 20px; }
+  .l-services header h2,
+  .l-work h2,
+  .l-quote h2,
+  .l-about h2 { font-size: clamp(2.45rem, 11vw, 3rem); }
+
+  .a-intro,
+  .a-collection { padding-left: 20px; padding-right: 20px; }
+  .a-intro h1 { font-size: clamp(2.9rem, 12vw, 3.45rem); }
+  .a-feature { margin-left: 20px; margin-right: 20px; }
+
+  .c-hero,
+  .c-included,
+  .c-book,
+  .c-footer { padding-left: 20px; padding-right: 20px; }
+  .c-team { margin-left: 12px; margin-right: 12px; }
+  .c-team > div:not(.c-team-film) { padding: 26px 20px 30px; }
+
+  .s-store { padding-left: 16px; padding-right: 16px; }
+
+  .n-feed,
+  .n-menu,
+  .n-care { padding: 34px 20px; }
+  .n-menu { gap: 22px; }
+  .n-menu article { padding: 20px; box-shadow: 7px 7px 0 #ffd451; }
+  .n-menu article h3 { font-size: 2.2rem; }
+  .n-menu footer { gap: 14px; }
+  .n-menu footer button { width: 100%; margin: 0; }
+  .n-care { display: block; padding-bottom: 38px; }
+  .n-care h2 {
+    max-width: 12ch;
+    font-size: clamp(2.55rem, 10.5vw, 3rem);
+    line-height: .96;
+  }
+  .n-care ul { margin: 1.35rem 0 0; padding: 0; gap: 12px; }
+  .n-mobile-book {
+    position: static;
+    display: block;
+    margin: 0;
+    min-height: 54px;
+    padding: 17px 20px;
+  }
+
+  .m-hero,
+  .m-month,
+  .m-portal,
+  .m-fit,
+  .m-footer,
+  .pc-services,
+  .pc-standard,
+  .pc-quote { padding-left: 20px; padding-right: 20px; }
+}
 .legacy-label {
   background: #f2bd48;
   color: #0d2927;
