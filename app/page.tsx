@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 type Key =
   | "reiki"
@@ -121,6 +121,7 @@ function Evidence({ active, close }: { active: Key; close: () => void }) {
       ["Service-business template", "Image-first digital gallery"],
       ["Cards competing with artwork", "Catalogue labels and masonry"],
       ["No buying context", "Edition and availability detail"],
+      ["Generic booking language", "Collector enquiry and provenance journey"],
     ],
     cleaning: [
       ["Vague contact journey", "Instant interactive estimate"],
@@ -131,6 +132,7 @@ function Evidence({ active, close }: { active: Key; close: () => void }) {
       ["Six products in service cards", "Scalable commerce catalogue"],
       ["Basic category buttons", "Search, sorting and filter rail"],
       ["No basket feedback", "Functional bag and delivery target"],
+      ["Flat product cards", "Variants, product detail and staged checkout"],
     ],
     nails: [
       ["Muted salon template", "Social-first portfolio collage"],
@@ -153,9 +155,9 @@ function Evidence({ active, close }: { active: Key; close: () => void }) {
         <button onClick={close}>Close ×</button>
       </header>
       <p>
-        The previous shared-template version remains available through{" "}
-        <b>Before</b>. The rebuilt version changes the structure, not only the
-        colour.
+        This site-specific baseline is a reconstructed comparison—not an
+        archived screenshot. It remains available through <b>Before</b>. The
+        rebuilt version changes the structure, not only the colour.
       </p>
       {changes[active].map((x, i) => (
         <article key={x[0]}>
@@ -281,8 +283,18 @@ function LegacyBefore({ active }: { active: Key }) {
       <header>
         <b>{brand.name}</b>
         <nav>
-          About　 Services　 Stories　{" "}
-          <button>{active === "shop" ? "Cart (0)" : "Book now"}</button>
+          {active === "gallery"
+            ? "About　 Gallery　 Contact　 "
+            : active === "shop"
+              ? "About　 Products　 Delivery　 "
+              : "About　 Services　 Stories　 "}
+          <button>
+            {active === "shop"
+              ? "Cart (0)"
+              : active === "gallery"
+                ? "View gallery"
+                : "Book now"}
+          </button>
         </nav>
       </header>
       <section className="legacy-hero">
@@ -297,8 +309,11 @@ function LegacyBefore({ active }: { active: Key }) {
           <h2>{d.story}.</h2>
         </div>
         <p>
-          We pride ourselves on offering a professional, friendly service
-          tailored to every customer. Get in touch to find out more.
+          {active === "gallery"
+            ? "A simple online portfolio with limited artwork detail and no clear collector journey."
+            : active === "shop"
+              ? "A flat product catalogue with no filtering, product variants or clear delivery information."
+              : "We pride ourselves on offering a professional, friendly service tailored to every customer. Get in touch to find out more."}
         </p>
       </section>
       <section className="legacy-cards">
@@ -309,8 +324,11 @@ function LegacyBefore({ active }: { active: Key }) {
               <span>⌁</span>
               <h3>{x}</h3>
               <p>
-                Professional quality and friendly support. Contact us for more
-                information.
+                {active === "gallery"
+                  ? "Basic title and price only. Contact the artist for availability."
+                  : active === "shop"
+                    ? "A basic category with no stock, size or material filters."
+                    : "Professional quality and friendly support. Contact us for more information."}
               </p>
               <a>{active === "shop" ? "View products" : "Explore & book"} ↗</a>
             </article>
@@ -328,7 +346,8 @@ function LegacyBefore({ active }: { active: Key }) {
 function Reiki() {
   const [session, setSession] = useState("reset"),
     [faq, setFaq] = useState(0),
-    [requested, setRequested] = useState(false);
+    [requested, setRequested] = useState(false),
+    [bookingSummary, setBookingSummary] = useState("");
   const options = {
     reset: ["The Reset", "30 minutes", "£35", "For a busy mind or heavy day."],
     restore: [
@@ -461,12 +480,28 @@ function Reiki() {
       <section className="r-founder">
         <div>
           <small>YOUR PRACTITIONER</small>
-          <h2>Held by a real person, not a wellness script.</h2>
+          <h2>A calm, personal practice—with room to be yourself.</h2>
         </div>
         <p>
-          Hayley created LuxeBeorn as a gentle distance-Reiki practice rooted in
-          family, calm and plain English. This area is ready for her real
-          portrait, training details and personal introduction before launch.
+          I created LuxeBeorn as a gentle distance-Reiki practice rooted in
+          family, calm and plain English. I will always explain what to expect,
+          give you space to ask questions and treat anything you share with
+          care. My current practitioner training and lineage are provided before
+          your first booking so you can make an informed choice.
+        </p>
+      </section>
+      <section className="r-boundaries">
+        <div>
+          <small>GROUNDED SUPPORT</small>
+          <h2>What Reiki can—and cannot—offer.</h2>
+        </div>
+        <p>
+          <b>It can</b> create intentional time for rest, reflection and
+          complementary wellbeing support.
+        </p>
+        <p>
+          <b>It cannot</b> diagnose, treat or replace qualified medical or
+          mental-health care.
         </p>
       </section>
       <section className="r-faq">
@@ -501,17 +536,16 @@ function Reiki() {
           <small>FIRST SESSION</small>
           <h2>Begin with a quiet conversation.</h2>
           <p>
-            Choose a session above, then leave your email. A real build would
-            send a private confirmation with the agreed UK time and simple
-            preparation notes.
+            Choose your session and a preferred UK time. I’ll reply privately to
+            confirm the appointment, preparation notes and the 24-hour
+            rescheduling policy.
           </p>
         </div>
         {requested ? (
           <div className="r-confirm">
             <b>Thank you—your demo request is ready.</b>
             <p>
-              In the live service, the private booking link and UK-time
-              preparation notes would now be emailed.
+              {bookingSummary}. No payment or message was sent in this demo.
             </p>
             <button onClick={() => setRequested(false)}>Start again</button>
           </div>
@@ -519,6 +553,10 @@ function Reiki() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              const data = new FormData(e.currentTarget);
+              setBookingSummary(
+                `${s[0]} requested for ${data.get("date")} at ${data.get("time")} UK time`,
+              );
               setRequested(true);
             }}
           >
@@ -527,8 +565,33 @@ function Reiki() {
               <input readOnly value={`${s[0]} · ${s[1]} · ${s[2]}`} />
             </label>
             <label>
+              Your name
+              <input required name="name" autoComplete="name" />
+            </label>
+            <label>
+              Preferred date
+              <input required name="date" type="date" />
+            </label>
+            <label>
+              Preferred UK time
+              <select required name="time" defaultValue="">
+                <option value="" disabled>
+                  Choose a time
+                </option>
+                <option>10:00</option>
+                <option>13:00</option>
+                <option>19:30</option>
+              </select>
+            </label>
+            <label>
               Email address
-              <input required type="email" placeholder="you@example.com" />
+              <input
+                required
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+              />
             </label>
             <button>Request a private booking link →</button>
           </form>
@@ -572,13 +635,16 @@ function Landscape() {
       <header className="l-top">
         <span>Andrew Thorn Landscaping</span>
         <p>Cambridgeshire & surrounding villages</p>
-        <a href="tel:07700900246">Call 07700 900 246</a>
+        <a href="#l-quote">Request a callback</a>
       </header>
       <nav className="l-nav">
         <b>
           AT<span>/</span>LANDSCAPING
         </b>
-        <div>Services　 Work　 About</div>
+        <div>
+          <a href="#l-services">Services</a>　<a href="#l-work">Work</a>　
+          <a href="#l-about">About</a>
+        </div>
         <a href="#l-quote">Request a site visit</a>
       </nav>
       <section className="l-hero">
@@ -595,7 +661,7 @@ function Landscape() {
           </p>
           <a href="#l-quote">Request a free visit →</a>
           <ul>
-            <li>Insurance details supplied with quote</li>
+            <li>Credentials and insurance confirmed before work</li>
             <li>Clear written quotes</li>
             <li>Tidy, respectful work</li>
           </ul>
@@ -605,7 +671,7 @@ function Landscape() {
           alt="Landscaper building a timber garden structure"
         />
       </section>
-      <section className="l-services">
+      <section className="l-services" id="l-services">
         <header>
           <span>01 / WHAT I DO</span>
           <h2>
@@ -632,7 +698,16 @@ function Landscape() {
             <span>0{i + 1}</span>
             <h3>{x[0]}</h3>
             <p>{x[1]}</p>
-            <a href="#l-work">See example work →</a>
+            <a
+              href="#l-work"
+              onClick={() =>
+                setFilter(
+                  i === 0 ? "Patios" : i === 1 ? "Fencing" : "Full gardens",
+                )
+              }
+            >
+              See example work →
+            </a>
           </article>
         ))}
       </section>
@@ -670,7 +745,7 @@ function Landscape() {
       <section className="l-work" id="l-work">
         <header>
           <div>
-            <small>SELECTED LOCAL WORK</small>
+            <small>DEMONSTRATION PROJECT LAYOUTS</small>
             <h2>Judge the finish.</h2>
           </div>
           <div>
@@ -690,6 +765,9 @@ function Landscape() {
             .filter((x) => filter === "All" || x[0] === filter)
             .map((x) => (
               <figure key={x[1]}>
+                <span className="l-demo-label">
+                  LICENSED STOCK · EXAMPLE LAYOUT
+                </span>
                 <img src={x[2]} alt={x[1]} />
                 <figcaption>
                   <small>{x[0]}</small>
@@ -699,6 +777,23 @@ function Landscape() {
               </figure>
             ))}
         </div>
+      </section>
+      <section className="l-about" id="l-about">
+        <div>
+          <small>OWNER-LED FROM FIRST VISIT TO FINISH</small>
+          <h2>You deal with Andrew.</h2>
+        </div>
+        <p>
+          Andrew brings a practical, hands-on approach to patios, fencing,
+          ground preparation and complete garden builds. Verified employment
+          history, qualifications and years of experience can be added from the
+          approved CV before launch—without inventing claims.
+        </p>
+        <ul>
+          <li>Clear scope before work begins</li>
+          <li>One point of contact</li>
+          <li>Site left safe and tidy</li>
+        </ul>
       </section>
       <section className="l-quote" id="l-quote">
         <div>
@@ -735,8 +830,10 @@ function Landscape() {
             </label>
             <label>
               Job type
-              <select>
-                <option>Choose one</option>
+              <select required defaultValue="">
+                <option value="" disabled>
+                  Choose one
+                </option>
                 <option>Patio or paving</option>
                 <option>Fencing</option>
                 <option>Full garden</option>
@@ -744,7 +841,30 @@ function Landscape() {
             </label>
             <label>
               Postcode
-              <input placeholder="PE28" />
+              <input required placeholder="PE28" />
+            </label>
+            <label>
+              Approximate size
+              <input required placeholder="e.g. 8 × 5 metres" />
+            </label>
+            <label>
+              Access
+              <select required defaultValue="">
+                <option value="" disabled>
+                  Choose access
+                </option>
+                <option>Direct side access</option>
+                <option>Access through home</option>
+                <option>Unsure</option>
+              </select>
+            </label>
+            <label>
+              Preferred reply
+              <select required>
+                <option>Phone call</option>
+                <option>Text message</option>
+                <option>Email</option>
+              </select>
             </label>
             <label>
               Ideal timing
@@ -758,6 +878,10 @@ function Landscape() {
               Project outline
               <input placeholder="What would you like changed?" />
             </label>
+            <label className="l-upload">
+              Project photos (demo affordance)
+              <input type="file" accept="image/*" multiple />
+            </label>
             <button>Request my visit →</button>
           </form>
         )}
@@ -767,36 +891,70 @@ function Landscape() {
 }
 
 const art = [
-  [
-    "Salt Air I",
-    "Original",
-    "£640",
-    "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=88",
-  ],
-  [
-    "Held Light",
-    "Edition of 30",
-    "£145",
-    "https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=900&q=88",
-  ],
-  [
-    "Soft Ground",
-    "Photography",
-    "£95",
-    "https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=900&q=88",
-  ],
-  [
-    "After Rain",
-    "Original",
-    "£780",
-    "https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&fit=crop&w=900&q=88",
-  ],
+  {
+    name: "Salt Air I",
+    kind: "Original",
+    price: "£640",
+    image:
+      "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=88",
+    medium: "Oil, wax and ground pigment on linen",
+    size: "76 × 102 cm",
+    year: "2026",
+    edition: "Unique work",
+    frame: "Unframed",
+    dispatch: "5–7 working days",
+  },
+  {
+    name: "Held Light",
+    kind: "Edition",
+    price: "£145",
+    image:
+      "https://images.unsplash.com/photo-1578301978162-7aae4d755744?auto=format&fit=crop&w=900&q=88",
+    medium: "Archival pigment print on cotton rag",
+    size: "50 × 70 cm",
+    year: "2025",
+    edition: "Edition of 30",
+    frame: "Unframed; framing available",
+    dispatch: "3–5 working days",
+  },
+  {
+    name: "Soft Ground",
+    kind: "Photography",
+    price: "£95",
+    image:
+      "https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=900&q=88",
+    medium: "Giclée photographic print",
+    size: "40 × 50 cm",
+    year: "2026",
+    edition: "Edition of 50",
+    frame: "Print only",
+    dispatch: "3–5 working days",
+  },
+  {
+    name: "After Rain",
+    kind: "Original",
+    price: "£780",
+    image:
+      "https://images.unsplash.com/photo-1577083552431-6e5fd01988a5?auto=format&fit=crop&w=900&q=88",
+    medium: "Oil and cold wax on birch panel",
+    size: "80 × 80 cm",
+    year: "2026",
+    edition: "Unique work",
+    frame: "Tray framed in oak",
+    dispatch: "7–10 working days",
+  },
 ];
 function Gallery() {
   const [view, setView] = useState<number | null>(null),
     [kind, setKind] = useState("All"),
-    [enquired, setEnquired] = useState(false);
-  const shown = art.filter((x) => kind === "All" || x[1].includes(kind));
+    [enquired, setEnquired] = useState(false),
+    [reference, setReference] = useState("");
+  const shown = art.filter((x) => kind === "All" || x.kind === kind);
+  const openWork = (index: number) => {
+    setView(index);
+    setEnquired(false);
+    setReference("");
+  };
   return (
     <div className="art-site">
       <header className="a-nav">
@@ -819,7 +977,7 @@ function Gallery() {
         </aside>
       </section>
       <section className="a-feature">
-        <img src={art[0][3]} alt="Featured abstract artwork" />
+        <img src={art[0].image} alt="Featured abstract artwork" />
         <div>
           <small>NEW ORIGINAL · 01</small>
           <h2>Salt Air I</h2>
@@ -829,7 +987,7 @@ function Gallery() {
             76 × 102 cm · Signed · Unique
           </p>
           <strong>£640</strong>
-          <button onClick={() => setView(0)}>View the work →</button>
+          <button onClick={() => openWork(0)}>View the work →</button>
         </div>
       </section>
       <section className="a-collection" id="a-collection">
@@ -848,17 +1006,25 @@ function Gallery() {
           </div>
         </header>
         <div className="a-grid">
-          {shown.map((x, i) => (
-            <figure key={x[0]} onClick={() => setView(art.indexOf(x))}>
-              <img src={x[3]} alt={x[0]} />
-              <figcaption>
-                <div>
-                  <b>{x[0]}</b>
-                  <small>{x[1]}</small>
-                </div>
-                <span>{x[2]}</span>
-              </figcaption>
-            </figure>
+          {shown.map((x) => (
+            <button
+              className="a-work"
+              key={x.name}
+              onClick={() => openWork(art.indexOf(x))}
+            >
+              <figure>
+                <img src={x.image} alt={x.name} />
+                <figcaption>
+                  <div>
+                    <b>{x.name}</b>
+                    <small>
+                      {x.kind} · {x.edition}
+                    </small>
+                  </div>
+                  <span>{x.price}</span>
+                </figcaption>
+              </figure>
+            </button>
           ))}
         </div>
       </section>
@@ -867,36 +1033,97 @@ function Gallery() {
         <h2>I paint the memory of a place, not the map of it.</h2>
         <p>Studio notes · August 2026</p>
       </section>
+      <section className="a-trust" id="a-artist">
+        <div>
+          <small>FROM STUDIO TO YOUR WALL</small>
+          <h2>Made slowly. Collected confidently.</h2>
+        </div>
+        <p>
+          Every work includes a signed certificate or edition record. Insured UK
+          delivery, framing options and international quotes are confirmed
+          personally before payment.
+        </p>
+        <a href="#a-collection">View available work →</a>
+      </section>
       <footer className="a-footer">
         MORROW STUDIO{" "}
         <span>Original work · Archival editions · Commissions</span>
       </footer>
       {view !== null && (
-        <div className="a-modal">
-          <button onClick={() => setView(null)}>Close ×</button>
-          <img src={art[view][3]} alt={art[view][0]} />
+        <div
+          className="a-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Details for ${art[view].name}`}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setView(null);
+          }}
+        >
+          <button className="a-close" autoFocus onClick={() => setView(null)}>
+            Close ×
+          </button>
+          <img src={art[view].image} alt={art[view].name} />
           <div>
-            <small>{art[view][1]}</small>
-            <h2>{art[view][0]}</h2>
+            <small>
+              {art[view].kind} · {art[view].year}
+            </small>
+            <h2>{art[view].name}</h2>
             <p>
-              76 × 102 cm · Archival materials ·{" "}
-              {art[view][1] === "Original" ? "Unique work" : "Signed edition"}
+              {art[view].medium}
               <br />
-              Certificate of authenticity included · Dispatch example: 5–7 days
+              {art[view].size} · {art[view].edition}
+              <br />
+              {art[view].frame} · Dispatch {art[view].dispatch}
+              <br />
+              Signed certificate or edition record included.
             </p>
-            <strong>{art[view][2]}</strong>
+            <strong>{art[view].price}</strong>
             {enquired ? (
               <div className="a-confirm">
-                <b>Enquiry prepared.</b>
+                <b>Collector enquiry {reference} prepared.</b>
                 <p>
-                  A real gallery would now send availability, framing and
-                  delivery details.
+                  {art[view].name} is referenced in your request. Nothing was
+                  sent in this demonstration.
                 </p>
               </div>
             ) : (
-              <button onClick={() => setEnquired(true)}>
-                Enquire about this work →
-              </button>
+              <form
+                className="a-enquiry"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setReference(`MS-${String(view + 1).padStart(3, "0")}`);
+                  setEnquired(true);
+                }}
+              >
+                <label>
+                  Name
+                  <input required autoComplete="name" />
+                </label>
+                <label>
+                  Email
+                  <input required type="email" autoComplete="email" />
+                </label>
+                <label>
+                  Delivery country / postcode
+                  <input required />
+                </label>
+                <label>
+                  Framing interest
+                  <select>
+                    <option>Please advise me</option>
+                    <option>Print/work only</option>
+                    <option>I would like framing options</option>
+                  </select>
+                </label>
+                <label>
+                  Message
+                  <textarea
+                    rows={2}
+                    placeholder="Anything you would like the studio to know"
+                  />
+                </label>
+                <button>Prepare collector enquiry →</button>
+              </form>
             )}
           </div>
         </div>
@@ -910,10 +1137,18 @@ function Cleaning() {
     [baths, setBaths] = useState(1),
     [freq, setFreq] = useState("Fortnightly"),
     [room, setRoom] = useState("Kitchen"),
+    [condition, setCondition] = useState("Maintained"),
+    [extras, setExtras] = useState<string[]>([]),
     [submitted, setSubmitted] = useState(false);
   const base = 22 + beds * 6 + baths * 8;
   const price = Math.round(
-    base * (freq === "Weekly" ? 0.88 : freq === "One-off" ? 1.5 : 1),
+    base * (freq === "Weekly" ? 0.88 : freq === "One-off" ? 1.5 : 1) +
+      extras.length * 12 +
+      (condition === "Needs attention" ? 18 : 0),
+  );
+  const hours = Math.max(
+    2,
+    Math.round((beds * 0.5 + baths * 0.6 + extras.length * 0.4) * 2) / 2,
   );
   const lists: Record<string, string[]> = {
     Kitchen: [
@@ -1023,8 +1258,37 @@ function Cleaning() {
               </button>
             ))}
           </div>
+          <label>
+            Current condition
+            <select
+              value={condition}
+              onChange={(e) => setCondition(e.target.value)}
+            >
+              <option>Maintained</option>
+              <option>Needs attention</option>
+            </select>
+          </label>
+          <fieldset className="c-extras">
+            <legend>Optional extras</legend>
+            {["Oven", "Inside fridge", "Inside windows"].map((x) => (
+              <label key={x}>
+                <input
+                  type="checkbox"
+                  checked={extras.includes(x)}
+                  onChange={() =>
+                    setExtras(
+                      extras.includes(x)
+                        ? extras.filter((y) => y !== x)
+                        : [...extras, x],
+                    )
+                  }
+                />{" "}
+                {x}
+              </label>
+            ))}
+          </fieldset>
           <footer>
-            <span>Illustrative estimate from</span>
+            <span>Illustrative estimate · approx. {hours} hours</span>
             <strong>£{price}</strong>
             <a href="#c-book">Check availability →</a>
           </footer>
@@ -1075,16 +1339,32 @@ function Cleaning() {
           <small>PEOPLE YOU CAN TRUST</small>
           <h2>Know who is coming into your home.</h2>
           <p>
-            This demo shows where a real founder introduction, insurance details
-            and familiar-cleaner policy create confidence before a customer
-            books.
+            Before any first clean, customers receive the cleaner’s name, the
+            key-handling process and confirmed insurance details. Demo
+            credentials are never presented as live proof.
           </p>
           <div>
             <b>✓ Cleaner confirmed in advance</b>
             <b>✓ Supplies policy made clear</b>
             <b>✓ Satisfaction process explained</b>
+            <b>✓ Cancellation terms confirmed before booking</b>
           </div>
         </div>
+      </section>
+      <section className="c-reviews">
+        <div>
+          <small>SAMPLE REVIEW LAYOUT</small>
+          <h2>Proof that feels human.</h2>
+        </div>
+        <blockquote>
+          “The clean was thorough, the arrival message was reassuring and the
+          house felt like ours—just lighter.”
+          <cite>Sample customer outcome · replace before launch</cite>
+        </blockquote>
+        <p>
+          Coverage and cleaner availability are confirmed by postcode. Weekly,
+          fortnightly and one-off visits can be requested.
+        </p>
       </section>
       <section className="c-book" id="c-book">
         <div>
@@ -1101,8 +1381,8 @@ function Cleaning() {
           <div className="c-confirm">
             <b>Availability request prepared.</b>
             <p>
-              {beds} bedroom · {baths} bathroom · {freq.toLowerCase()} ·
-              illustrative estimate from £{price}.
+              {beds} bedroom · {baths} bathroom · {freq.toLowerCase()} · approx.{" "}
+              {hours} hours · illustrative estimate from £{price}.
             </p>
             <p>
               This is a demonstration, so nothing was sent. A live customer
@@ -1119,9 +1399,35 @@ function Cleaning() {
               setSubmitted(true);
             }}
           >
-            <input required placeholder="Your postcode" />
-            <input required type="email" placeholder="Your email" />
-            <button>Check real availability →</button>
+            <label>
+              Your name
+              <input required autoComplete="name" />
+            </label>
+            <label>
+              Postcode
+              <input required autoComplete="postal-code" />
+            </label>
+            <label>
+              Email
+              <input required type="email" autoComplete="email" />
+            </label>
+            <label>
+              Phone
+              <input required type="tel" autoComplete="tel" />
+            </label>
+            <label>
+              Preferred day
+              <select>
+                <option>Flexible</option>
+                <option>Monday–Wednesday</option>
+                <option>Thursday–Friday</option>
+              </select>
+            </label>
+            <label className="c-consent">
+              <input required type="checkbox" /> I agree to be contacted about
+              this request and have read the demo privacy note.
+            </label>
+            <button>Request availability →</button>
           </form>
         )}
       </section>
@@ -1177,7 +1483,11 @@ function Shop() {
     [max, setMax] = useState(120),
     [sort, setSort] = useState("Featured"),
     [bag, setBag] = useState<string[]>([]),
-    [open, setOpen] = useState(false);
+    [open, setOpen] = useState(false),
+    [detail, setDetail] = useState<number | null>(null),
+    [filtersOpen, setFiltersOpen] = useState(false),
+    [checkout, setCheckout] = useState(false),
+    [variant, setVariant] = useState("Slate");
   let shown = goods.filter(
     (x) =>
       (cat === "All" || x[1] === cat) &&
@@ -1218,7 +1528,16 @@ function Shop() {
   return (
     <div className="shop-site">
       <header className="s-nav">
-        <a href="#s-store">☰ SHOP</a>
+        <button
+          onClick={() => {
+            setFiltersOpen(true);
+            document
+              .getElementById("s-store")
+              ?.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
+          ☰ SHOP
+        </button>
         <b>FIELD/SUPPLY</b>
         <div>
           <a href="#s-store">⌕ Search</a>
@@ -1235,8 +1554,7 @@ function Shop() {
           </h1>
           <p>
             Considered outdoor goods for slower weekends and longer trails.
-            Product testing and repair guarantees shown here are demo
-            presentation examples.
+            Durable materials, useful details and a repair-first point of view.
           </p>
           <a href="#s-store">Shop the field edit →</a>
         </div>
@@ -1255,7 +1573,13 @@ function Shop() {
         ))}
       </section>
       <section className="s-store" id="s-store">
-        <aside>
+        <aside className={filtersOpen ? "open" : ""}>
+          <button
+            className="s-filter-close"
+            onClick={() => setFiltersOpen(false)}
+          >
+            Close filters ×
+          </button>
           <h2>Filter field</h2>
           <label>
             Search
@@ -1278,7 +1602,7 @@ function Shop() {
             ))}
           </div>
           <label>
-            Maximum £{max}
+            Maximum £{max} <small>£25—£120</small>
             <input
               type="range"
               min="25"
@@ -1300,6 +1624,12 @@ function Shop() {
         <main>
           <header>
             <span>{shown.length} products</span>
+            <button
+              className="s-mobile-filter"
+              onClick={() => setFiltersOpen(true)}
+            >
+              Filter ({cat === "All" ? 0 : 1})
+            </button>
             <select value={sort} onChange={(e) => setSort(e.target.value)}>
               <option>Featured</option>
               <option>Price low</option>
@@ -1311,11 +1641,21 @@ function Shop() {
             {shown.map((x) => (
               <article key={x[0]}>
                 <figure>
-                  <img src={x[3]} alt={x[0]} />
+                  <button
+                    className="s-product-open"
+                    onClick={() => setDetail(goods.indexOf(x))}
+                  >
+                    <img src={x[3]} alt={x[0]} />
+                  </button>
                   <button onClick={() => add(x[0])}>Quick add +</button>
                 </figure>
                 <small>{x[1]} · In stock</small>
-                <h3>{x[0]}</h3>
+                <button
+                  className="s-product-title"
+                  onClick={() => setDetail(goods.indexOf(x))}
+                >
+                  <h3>{x[0]}</h3>
+                </button>
                 <b>{x[2]}</b>
               </article>
             ))}
@@ -1336,11 +1676,62 @@ function Shop() {
             </div>
           )}
           <p className="s-trust">
-            Example commerce reassurance: UK delivery · 30-day returns ·
-            material and care details shown before purchase
+            UK delivery from £4.95 · 30-day returns · repair and material
+            guidance on every product
           </p>
         </main>
       </section>
+      {detail !== null && (
+        <div
+          className="s-detail"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Product details for ${goods[detail][0]}`}
+        >
+          <button
+            className="s-detail-close"
+            autoFocus
+            onClick={() => setDetail(null)}
+          >
+            Close ×
+          </button>
+          <img src={goods[detail][3]} alt={goods[detail][0]} />
+          <div>
+            <small>{goods[detail][1]} · In stock</small>
+            <h2>{goods[detail][0]}</h2>
+            <strong>{goods[detail][2]}</strong>
+            <p>
+              Hard-wearing construction, considered storage and field-repairable
+              details. Material and care instructions included.
+            </p>
+            <label>
+              Colour
+              <select
+                value={variant}
+                onChange={(e) => setVariant(e.target.value)}
+              >
+                <option>Slate</option>
+                <option>Moss</option>
+                <option>Clay</option>
+              </select>
+            </label>
+            <ul>
+              <li>Dispatch in 1–2 working days</li>
+              <li>30-day returns in original condition</li>
+              <li>Repair guidance included</li>
+            </ul>
+            <button
+              onClick={() => {
+                add(goods[detail][0]);
+                setDetail(null);
+                setOpen(true);
+              }}
+            >
+              Add {variant} to bag →
+            </button>
+          </div>
+        </div>
+      )}
       {open && (
         <aside className="s-bag">
           <header>
@@ -1350,13 +1741,18 @@ function Shop() {
           {bag.length ? (
             [...new Set(bag)].map((name) => (
               <article key={name}>
+                <img src={goods.find((x) => x[0] === name)?.[3]} alt="" />
                 <div>
                   <b>{name}</b>
+                  <small>{goods.find((x) => x[0] === name)?.[2]} each</small>
                   <small>Quantity {bag.filter((x) => x === name).length}</small>
                 </div>
                 <div>
                   <button onClick={() => remove(name)}>−</button>
                   <button onClick={() => add(name)}>＋</button>
+                  <button onClick={() => setBag(bag.filter((x) => x !== name))}>
+                    Remove
+                  </button>
                 </div>
               </article>
             ))
@@ -1370,12 +1766,19 @@ function Shop() {
                 : `£${75 - total} away from free delivery`}
             </p>
             <strong>Subtotal £{total}</strong>
-            <button
-              disabled={!bag.length}
-              onClick={() => alert("Demo checkout journey complete")}
-            >
+            <button disabled={!bag.length} onClick={() => setCheckout(true)}>
               Continue to demo checkout →
             </button>
+            {checkout && (
+              <div className="s-checkout">
+                <b>Demo checkout ready</b>
+                <p>
+                  Order subtotal £{total}. Delivery and contact details would be
+                  confirmed next. No payment is collected.
+                </p>
+                <button onClick={() => setCheckout(false)}>Back to bag</button>
+              </div>
+            )}
           </footer>
         </aside>
       )}
@@ -1408,7 +1811,8 @@ const nailImgs = [
 function Nails() {
   const [tier, setTier] = useState(1),
     [style, setStyle] = useState("All"),
-    [booking, setBooking] = useState(false);
+    [booking, setBooking] = useState(false),
+    [booked, setBooked] = useState("");
   const tiers = [
     ["Clean girl", "£38", "60 min"],
     ["Statement", "£48", "75 min"],
@@ -1511,11 +1915,15 @@ function Nails() {
           <h3>{tiers[tier][0]}</h3>
           <p>
             {tier === 0
-              ? "One colour, glazed finish or simple French."
+              ? "BIAB base with one colour, glazed finish or simple French. Short-to-medium natural length."
               : tier === 1
-                ? "Chrome, aura, cuffs or art across up to five nails."
-                : "Detailed art across every nail, layered effects or character work."}
+                ? "BIAB base with chrome, aura, cuffs or art across up to five nails."
+                : "BIAB base with detailed art across every nail, layered effects or character work."}
           </p>
+          <small>
+            Removal from £10 · repairs from £4 · 30% demo deposit · 48-hour
+            change policy
+          </small>
           <footer>
             <b>{tiers[tier][1]}</b>
             <span>{tiers[tier][2]}</span>
@@ -1523,16 +1931,71 @@ function Nails() {
           </footer>
           {booking && (
             <div className="n-confirm">
-              <b>
-                {tiers[tier][0]} selected · {tiers[tier][1]} · {tiers[tier][2]}
-              </b>
-              <p>
-                BIAB base included. Removal, repairs and extra length would be
-                confirmed before the deposit is taken.
-              </p>
-              <button onClick={() => setBooking(false)}>
-                Change selection
-              </button>
+              {booked ? (
+                <>
+                  <b>Your demo booking is held.</b>
+                  <p>{booked}. No deposit was charged.</p>
+                  <button
+                    onClick={() => {
+                      setBooked("");
+                      setBooking(false);
+                    }}
+                  >
+                    Start again
+                  </button>
+                </>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const data = new FormData(e.currentTarget);
+                    setBooked(
+                      `${tiers[tier][0]} · ${data.get("date")} at ${data.get("time")} · ${data.get("removal")}`,
+                    );
+                  }}
+                >
+                  <b>
+                    {tiers[tier][0]} · {tiers[tier][1]} · {tiers[tier][2]}
+                  </b>
+                  <label>
+                    Removal / infill
+                    <select name="removal">
+                      <option>No removal</option>
+                      <option>Afterglow infill</option>
+                      <option>Removal from another studio</option>
+                    </select>
+                  </label>
+                  <label>
+                    Preferred date
+                    <input required name="date" type="date" />
+                  </label>
+                  <label>
+                    Available time
+                    <select required name="time" defaultValue="">
+                      <option value="" disabled>
+                        Choose a time
+                      </option>
+                      <option>10:00</option>
+                      <option>13:30</option>
+                      <option>17:30</option>
+                    </select>
+                  </label>
+                  <label>
+                    Name
+                    <input required autoComplete="name" />
+                  </label>
+                  <label>
+                    Mobile
+                    <input required type="tel" autoComplete="tel" />
+                  </label>
+                  <p>
+                    Demo deposit:{" "}
+                    {tier === 0 ? "£11.40" : tier === 1 ? "£14.40" : "£18.60"}.
+                    Nothing will be charged.
+                  </p>
+                  <button>Hold this demo appointment →</button>
+                </form>
+              )}
             </div>
           )}
         </article>
@@ -1560,7 +2023,10 @@ function Members() {
     [topic, setTopic] = useState("All"),
     [done, setDone] = useState<string[]>([]),
     [tab, setTab] = useState("Overview"),
-    [registered, setRegistered] = useState(false);
+    [registered, setRegistered] = useState(false),
+    [preview, setPreview] = useState<string | null>(null),
+    [joinOpen, setJoinOpen] = useState(false),
+    [joined, setJoined] = useState(false);
   const resources = [
     ["Visibility", "Workshop", "The one-page visibility plan"],
     ["Sales", "Template", "Warm follow-up messages"],
@@ -1596,7 +2062,7 @@ function Members() {
           <header>
             <div>
               <small>DEMO MEMBER SPACE</small>
-              <h1>{tab === "Overview" ? "Good evening, Joe." : tab}</h1>
+              <h1>{tab === "Overview" ? "Welcome back, demo member." : tab}</h1>
             </div>
             <span>{done.length} of 4 complete</span>
           </header>
@@ -1617,15 +2083,17 @@ function Members() {
               <header>
                 <h2>Your library</h2>
                 <div>
-                  {["All", "Visibility", "Sales", "Planning"].map((x) => (
-                    <button
-                      className={topic === x ? "on" : ""}
-                      onClick={() => setTopic(x)}
-                      key={x}
-                    >
-                      {x}
-                    </button>
-                  ))}
+                  {["All", "Visibility", "Sales", "Planning", "Mindset"].map(
+                    (x) => (
+                      <button
+                        className={topic === x ? "on" : ""}
+                        onClick={() => setTopic(x)}
+                        key={x}
+                      >
+                        {x}
+                      </button>
+                    ),
+                  )}
                 </div>
               </header>
               <div>
@@ -1640,11 +2108,7 @@ function Members() {
                         {x[0]} · {x[1]}
                       </small>
                       <h3>{x[2]}</h3>
-                      <button
-                        onClick={() => alert(`Opening demo resource: ${x[2]}`)}
-                      >
-                        Preview
-                      </button>
+                      <button onClick={() => setPreview(x[2])}>Preview</button>
                       <button
                         onClick={() =>
                           setDone(
@@ -1673,13 +2137,38 @@ function Members() {
               </button>
             </section>
           )}
+          {preview && (
+            <section
+              className="p-preview"
+              role="dialog"
+              aria-label={`Resource preview: ${preview}`}
+            >
+              <button onClick={() => setPreview(null)}>Close ×</button>
+              <small>RESOURCE PREVIEW · 12 MINUTES</small>
+              <h2>{preview}</h2>
+              <p>
+                A focused sample with one short explanation, a practical prompt
+                and a next action you can finish today.
+              </p>
+              <ol>
+                <li>Notice the current friction</li>
+                <li>Choose one realistic action</li>
+                <li>Save the next step</li>
+              </ol>
+              <button
+                onClick={() => {
+                  setDone(done.includes(preview) ? done : [...done, preview]);
+                  setPreview(null);
+                }}
+              >
+                Mark complete and return →
+              </button>
+            </section>
+          )}
         </main>
       </div>
     );
-  const join = () =>
-    alert(
-      "Demo joining journey: £29/month, cancel anytime. No payment is taken.",
-    );
+  const join = () => setJoinOpen(true);
   return (
     <div className="member-site">
       <header className="m-nav">
@@ -1769,6 +2258,29 @@ function Members() {
           <small>Next: Quiet co-working · Wednesday</small>
         </div>
       </section>
+      <section className="m-fit">
+        <div>
+          <small>BUILT FOR REAL WORK</small>
+          <h2>A useful room, led with care.</h2>
+          <p>
+            Monthly facilitation, one live working session and a focused
+            resource rhythm. Founder credentials and verified member outcomes
+            belong here before launch.
+          </p>
+        </div>
+        <div>
+          <h3>This is for you if…</h3>
+          <p>
+            You run an independent business and want calm structure, useful
+            tools and company while doing the work.
+          </p>
+          <h3>Probably not if…</h3>
+          <p>
+            You want daily content, instant-growth promises or a high-pressure
+            accountability programme.
+          </p>
+        </div>
+      </section>
       <footer className="m-footer">
         <div>
           <h2>Make good work easier to do.</h2>
@@ -1776,6 +2288,53 @@ function Members() {
         </div>
         <button onClick={join}>Join the club →</button>
       </footer>
+      {joinOpen && (
+        <div
+          className="m-checkout"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Membership demo checkout"
+        >
+          <button onClick={() => setJoinOpen(false)}>Close ×</button>
+          {joined ? (
+            <div>
+              <small>DEMO COMPLETE</small>
+              <h2>Your place is ready.</h2>
+              <p>
+                No payment was taken. A live member would now receive sign-in
+                details and the next-session invitation.
+              </p>
+              <button
+                onClick={() => {
+                  setJoined(false);
+                  setJoinOpen(false);
+                }}
+              >
+                Finish demo
+              </button>
+            </div>
+          ) : (
+            <div>
+              <small>PLAN SUMMARY</small>
+              <h2>The Good Work Club</h2>
+              <strong>£29 / month</strong>
+              <ul>
+                <li>Monthly playbook and templates</li>
+                <li>One live working session</li>
+                <li>Full member library</li>
+                <li>Cancel before the next renewal</li>
+              </ul>
+              <p>
+                Demonstration checkout only. No payment details are requested or
+                stored.
+              </p>
+              <button onClick={() => setJoined(true)}>
+                Confirm demo membership →
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
